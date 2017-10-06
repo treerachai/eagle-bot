@@ -1,0 +1,56 @@
+{
+  "private": true,
+  "name": "EagleBot",
+  "version": "1.0.0",
+  "description": "A Discord Bot",
+  "main": "DougBot.js",
+  "scripts": {
+    "prestart": "npm update",
+    "test": "standard & eslint **",
+    "start": "node DougBot.js",
+    "dbcreate": "node runtime/internal/dbcreate.js",
+    "snyk-protect": "snyk protect"
+  },
+  "author": {
+    "name": "Jonasdero"
+  },
+  "bugs": {
+    "url": "https://github.com/Jonasdero/eagle-bot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonasdero/eagle-bot"
+  },
+  "engines": {
+    "node": "4.x.x - 6.x.x",
+    "npm": ">=3.x.x"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "bugsnag": "^1.9.0",
+    "cleverbot.io": "^1.0.4",
+    "discordie": "github:qeled/discordie#dev",
+    "imgflipper": "^1.0.1",
+    "leetspeak": "0.0.1",
+    "minimist": "^1.2.0",
+    "prompt": "^1.0.0",
+    "require-directory": "^2.1.1",
+    "rethinkdbdash": "^2.3.23",
+    "semver": "^5.1.0",
+    "snyk": "^1.42.3",
+    "superagent": "^3.6.3",
+    "tagscript": "github:guscaplan/tagscript",
+    "winston": "^2.4.0",
+    "winston-daily-rotate-file": "^1.0.1",
+    "winston-elasticsearch": "^0.5.3",
+    "xml2js": "^0.4.16",
+    "youtube-api": "^2.0.2",
+    "youtube-dl": "^1.12.2",
+    "ytdl-core": "^0.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "standard": "^8.1.0"
+  },
+  "snyk": true
+}
