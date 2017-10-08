@@ -52,7 +52,7 @@ Commands.rip = {
     if (skipped === true && msg.mentions.filter(m => m.id !== bot.User.id).length === 1 && suffix) {
       resolve[0] = suffix
     }
-    msg.channel.sendMessage('http://ripme.xyz/' + qs.stringify(resolve).substr(2))
+    msg.reply('http://ripme.xyz/' + qs.stringify(resolve).substr(2))
   }
 }
 
@@ -67,7 +67,7 @@ Commands.fortunecow = {
       if (!err && result.status === 200) {
         msg.reply('```' + result.text + '```')
       } else if (result.status === 429) {
-        msg.channel.sendMessage('Too many requests, please try again later.')
+        msg.reply('Too many requests, please try again later.')
       } else {
         Logger.warn(err)
       }
@@ -86,7 +86,7 @@ Commands.randomcat = {
     request.get('http://random.cat/meow')
     .end((err, res) => {
       if (!err && res.status === 200) {
-        msg.channel.sendMessage(res.body.file)
+        msg.reply(res.body.file)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -105,7 +105,7 @@ Commands.randomdog = {
     request.get('https://random.dog/woof.json')
     .end((err, res) => {
       if (!err && res.status === 200) {
-        msg.channel.sendMessage(res.body.url)
+        msg.reply(res.body.url)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -123,7 +123,7 @@ Commands.dogfact = {
     request.get('https://dog-api.kinduff.com/api/facts')
     .end((err, res) => {
       if (!err && res.status === 200) {
-        msg.channel.sendMessage(res.body.facts[0])
+        msg.reply(res.body.facts[0])
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -141,7 +141,7 @@ Commands.catfact = {
     request.get('https://catfact.ninja/fact')
     .end((err, res) => {
       if (!err && res.status === 200) {
-        msg.channel.sendMessage(res.body.fact)
+        msg.reply(res.body.fact)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -186,7 +186,7 @@ Commands.stroke = {
     .query({ lastName: name[1] })
     .end((err, res) => {
       if (!err && res.status === 200) {
-        msg.channel.sendMessage(res.body.value.joke)
+        msg.reply(res.body.value.joke)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -206,11 +206,11 @@ Commands.yomomma = {
         try {
           JSON.parse(res.text)
         } catch (e) {
-          msg.channel.sendMessage('The API returned an unconventional response.')
+          msg.reply('The API returned an unconventional response.')
           return
         }
         var joke = JSON.parse(res.text)
-        msg.channel.sendMessage(joke.joke)
+        msg.reply(joke.joke)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -231,11 +231,11 @@ Commands.advice = {
         try {
           JSON.parse(res.text)
         } catch (e) {
-          msg.channel.sendMessage('The API returned an unconventional response.')
+          msg.reply('The API returned an unconventional response.')
           return
         }
         var advice = JSON.parse(res.text)
-        msg.channel.sendMessage(advice.slip.advice)
+        msg.reply(advice.slip.advice)
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
       }
@@ -277,7 +277,7 @@ Commands.urbandictionary = {
         if (!err && res.status === 200) {
           var uD = res.body
           if (uD.result_type !== 'no_results') {
-            msg.channel.sendMessage('', false, {
+            msg.reply('', false, {
               color: 0x6832e3,
               author: {name: 'UrbanDictionary'},
               title: `The internet's definition of ${uD.list[0].word}`,
@@ -322,7 +322,7 @@ Commands.fact = {
           try {
             msg.reply(result.facts.fact[0])
           } catch (e) {
-            msg.channel.sendMessage('The API returned an unconventional response.')
+            msg.reply('The API returned an unconventional response.')
           }
         })
       }
@@ -366,9 +366,9 @@ Commands.fancyinsult = {
       if (!err && res.status === 200) {
         var fancyinsult = res.body
         if (suffix === '') {
-          msg.channel.sendMessage(fancyinsult.insult)
+          msg.reply(fancyinsult.insult)
         } else {
-          msg.channel.sendMessage(suffix + ', ' + fancyinsult.insult)
+          msg.reply(suffix + ', ' + fancyinsult.insult)
         }
       } else {
         Logger.error(`Got an error: ${err}, status code: ${res.status}`)
@@ -389,7 +389,7 @@ Commands.cleverbot = {
       msg.channel.sendTyping()
       cleverbot.ask(suffix, function (e, r) {
         if (e) Logger.error(e)
-        msg.channel.sendMessage(r)
+        msg.reply(r)
       })
     })
   }
@@ -420,7 +420,7 @@ Commands.e621 = {
             FurryArray.push(`${msg.author.mention}, you've searched for ` + '`random`')
           } // hehe no privacy if you do the nsfw commands now.
           FurryArray.push(result.body[count].file_url)
-          msg.channel.sendMessage(FurryArray.join('\n'))
+          msg.reply(FurryArray.join('\n'))
         }
       } else {
         Logger.error(`Got an error: ${err}, status code: ${result.status}`)
@@ -441,7 +441,7 @@ Commands.rule34 = {
     .end((err, result) => {
       if (err || result.status !== 200) {
         Logger.error(`${err}, status code ${result.status}`)
-        msg.channel.sendMessage('The API returned an unconventional response.')
+        msg.reply('The API returned an unconventional response.')
       }
       var xml2js = require('xml2js')
       if (result.text.length < 75) {
@@ -449,7 +449,7 @@ Commands.rule34 = {
       } else {
         xml2js.parseString(result.text, (err, reply) => {
           if (err) {
-            msg.channel.sendMessage('The API returned an unconventional response.')
+            msg.reply('The API returned an unconventional response.')
           } else {
             var count = Math.floor((Math.random() * reply.posts.post.length))
             var FurryArray = []
@@ -459,7 +459,7 @@ Commands.rule34 = {
               FurryArray.push(msg.author.mention + ", you've searched for `" + suffix + '`')
             }
             FurryArray.push(`https:${reply.posts.post[count].$.file_url}`)
-            msg.channel.sendMessage(FurryArray.join('\n'))
+            msg.reply(FurryArray.join('\n'))
           }
         })
       }
@@ -584,7 +584,7 @@ Commands.magic8ball = {
       'There is a small chance.'
     ]
     var answer = answers[Math.floor(Math.random() * answers.length)]
-    msg.channel.sendMessage('The Magic 8 Ball says:\n```' + answer + '```')
+    msg.reply('The Magic 8 Ball says:\n```' + answer + '```')
   }
 }
 
@@ -598,7 +598,7 @@ Commands.randommeme = {
     .set('Authorization', 'Client-ID ' + config.api_keys.imgur)
     .end(function (err, result) {
       if (!err && !result.body.data.error) {
-        msg.channel.sendMessage(result.body.data[Math.floor((Math.random() * 20) + 1)].link)
+        msg.reply(result.body.data[Math.floor((Math.random() * 20) + 1)].link)
       } else {
         Logger.error(result.body.data.error)
       }
@@ -624,7 +624,7 @@ Commands.shorten = {
       .set('Content-Type', 'application/json')
       .end(function (err, res) {
         if (!err) {
-          msg.channel.sendMessage(`:link: Shortened URL: **${res.body.id}**`)
+          msg.reply(`:link: Shortened URL: **${res.body.id}**`)
         } else {
           Logger.debug(`Got an error: ${err}, status code: ${res.status}`)
         }

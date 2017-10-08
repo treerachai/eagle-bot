@@ -61,12 +61,12 @@ Commands.say = {
 
 Commands.purge = {
   name: 'purge',
-  help: 'Use this command to delete any amount of message up to 1000.',
+  help: 'Use this command to delete any amount of message up to 100.',
   usage: '<number>',
   aliases: ['prune', 'pu'],
   noDM: true,
   timeout: 30,
-  level: 0,
+  level: 1,
   fn: function (msg, suffix, bot) {
     var guildPerms = msg.author.permissionsFor(msg.guild)
     var botPerms = bot.User.permissionsFor(msg.guild)
@@ -77,7 +77,7 @@ Commands.purge = {
       msg.reply('I do not have `Manage Messages` permission!')
     } else {
       if (!suffix || isNaN(suffix) || suffix > 1000 || suffix < 0) {
-        msg.reply('Please try again with a number between **0** to **1000**.')
+        msg.reply('Please try again with a number between **0** to **100**.')
       } else {
         msg.channel.fetchMessages(suffix).then((result) => {
           var cantDelete = 0
@@ -258,6 +258,7 @@ Commands.customize = {
 Commands.info = {
   name: 'info',
   help: "I'll print some information about me.",
+  aliases: ['about'],
   timeout: 10,
   level: 0,
   fn: function (msg, suffix, bot) {

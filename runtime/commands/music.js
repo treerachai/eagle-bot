@@ -23,9 +23,9 @@ Commands.volume = {
   level: 1,
   fn: function (msg, suffix, bot) {
     v.volume(msg, suffix, bot).then(v => {
-      msg.channel.sendMessage(v)
+      msg.reply(v)
     }).catch(err => {
-      msg.channel.sendMessage(err)
+      msg.reply(err)
     })
   }
 }
@@ -87,19 +87,19 @@ Commands.playlist = {
           if (x >= 1) {
             if (suffix[0] === 'clear') {
               v.deleteFromPlaylist(msg, 'all').then(r => {
-                msg.channel.sendMessage(r)
+                msg.reply(r)
               }).catch(err => {
-                msg.channel.sendMessage(err)
+                msg.reply(err)
               })
             } else {
               v.deleteFromPlaylist(msg, (suffix[1])).then(r => {
-                msg.channel.sendMessage(`**${r}** has been removed from the playlist.`)
+                msg.reply(`**${r}** has been removed from the playlist.`)
               }).catch(err => {
-                msg.channel.sendMessage(err)
+                msg.reply(err)
               })
             }
           } else {
-            msg.channel.sendMessage('You do not have the required setlevel for this subcommand, check with the server owner if you should be allowed to do this, required level is 1 or higher.')
+            msg.reply('You do not have the required setlevel for this subcommand, check with the server owner if you should be allowed to do this, required level is 1 or higher.')
           }
         })
       } else {
@@ -113,17 +113,17 @@ Commands.playlist = {
               break
             }
           }
-          msg.channel.sendMessage(arr.join('\n')).then((m) => {
+          msg.reply(arr.join('\n')).then((m) => {
             setTimeout(() => {
               m.delete()
             }, 30000)
           })
         }).catch(() => {
-          msg.channel.sendMessage("It appears that there aren't any songs in the current queue.")
+          msg.reply("It appears that there aren't any songs in the current queue.")
         })
       }
     } else {
-      msg.channel.sendMessage('I am not streaming music in this server.')
+      msg.reply('I am not streaming music in this server.')
     }
   }
 }

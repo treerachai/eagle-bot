@@ -5,11 +5,13 @@
   "description": "A Discord Bot",
   "main": "DougBot.js",
   "scripts": {
-    "prestart": "npm update",
+    "prestart": "yarn upgrade",
     "test": "standard & eslint **",
-    "start": "node DougBot.js",
+    "start": "node bot.js",
     "dbcreate": "node runtime/internal/dbcreate.js",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "forever": "forever -o eagle-out.log -e eagle-error.log start bot.js",
+    "start-db": "rethinkdb --daemon"
   },
   "author": {
     "name": "Jonasdero"
@@ -37,9 +39,10 @@
     "require-directory": "^2.1.1",
     "rethinkdbdash": "^2.3.23",
     "semver": "^5.1.0",
-    "snyk": "^1.42.3",
+    "snyk": "^1.42.4",
     "superagent": "^3.6.3",
     "tagscript": "github:guscaplan/tagscript",
+    "unirest": "^0.5.1",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.0.1",
     "winston-elasticsearch": "^0.5.3",

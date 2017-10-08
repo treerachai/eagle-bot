@@ -45,180 +45,188 @@ for (var d in com) {
   }
 }
 
-var json = '{';
-var filename = commandLoc + `commands.json`;
-var current = 0;
+var fieldsArr = []
+var titles = []
+for (let i = 0; i < 1; i++) {
+  var json = '{';
+  var filename = commandLoc + `commands.json`;
+  var current = 0;
 
-for (var d in com) {
-  current++;
-  if (com[d].Filename == null) continue;
-
-  json += '"' + com[d].Filename + '":'
-  var exp = {
-    name: com[d].Filename,
-    commands: []
-  }
-  for (var cc in com[d].Commands) {
-    if (cc == null) continue;
-    var c = (commands[cc]) ? commands[cc] : alias[cc]
-    var attributes = []
-    var name
-    for (var x in commands) if (commands[x] === c) {
-      name = x
-      break
+  for (var d in com) {
+    current++;
+    if (com[d].Filename == null) continue;
+    var fields = []
+    titles.push(com[d].Filename)
+    json += '"' + com[d].Filename + '":'
+    var exp = {
+      name: com[d].Filename,
+      commands: []
     }
-
-    var botNoDm = false, botHidden = false, botNsfw = false, botTimeout = 0, attr = []
-    for (var attribute in c) switch (attribute) {
-      case 'noDM': { botNoDm = c[attribute]; break }
-      case 'hidden': { botHidden = c[attribute]; break }
-      case 'nsfw': { botNsfw = c[attribute]; break }
-      case 'timeout': { botTimeout = c.timeout; break }
-    }
-    exp.commands.push({
-      name: name,
-      help: c.help,
-      usage: (c.usage) ? config.settings.prefix + c.name + ' ' + c.usage : config.settings.prefix + c.name,
-      level: c.level,
-      aliases: (c.aliases) ? c.aliases.join(', ') : '',
-      attributes: {
-        noDM: botNoDm,
-        hidden: botHidden,
-        nsfw: botNsfw,
-        timeout: botTimeout,
+    for (var cc in com[d].Commands) {
+      if (cc == null) continue;
+      var c = (commands[cc]) ? commands[cc] : alias[cc]
+      var attributes = []
+      var name
+      for (var x in commands) if (commands[x] === c) {
+        name = x
+        break
       }
-    });
-  }
-  json += JSON.stringify(exp) + ',';
-}
-json += '"Customize":'
-var arr = []
 
-let cust = {
-  name: 'Customize',
-  commands: [],
+      var botNoDm = false, botHidden = false, botNsfw = false, botTimeout = 0, attr = []
+      for (var attribute in c) switch (attribute) {
+        case 'noDM': { botNoDm = c[attribute]; break }
+        case 'hidden': { botHidden = c[attribute]; break }
+        case 'nsfw': { botNsfw = c[attribute]; break }
+        case 'timeout': { botTimeout = c.timeout; break }
+      }
+      exp.commands.push({
+        name: name,
+        help: c.help,
+        usage: (c.usage) ? config.settings.prefix + c.name + ' ' + c.usage : config.settings.prefix + c.name,
+        level: c.level,
+        aliases: (c.aliases) ? c.aliases.join(', ') : '',
+        attributes: {
+          noDM: botNoDm,
+          hidden: botHidden,
+          nsfw: botNsfw,
+          timeout: botTimeout,
+        }
+      });
+      fields.push({ name: config.settings.prefix + c.name, value: c.help, inline: false })
+    }
+    json += JSON.stringify(exp) + ',';
+    fieldsArr.push(fields)
+  }
+  json += '"Customize":'
+  var arr = []
+
+  let cust = {
+    name: 'Customize',
+    commands: [],
+  }
+  cust.commands.push({
+    name: 'customize nsfw',
+    help: 'Changes my reply when someones uses a NSFW command while I disallow that.',
+    usage: config.settings.prefix + name + ' <on/off>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize permissions',
+    help: 'Changes my reply when someone tries to use a command they do not have access to',
+    usage: config.settings.prefix + name + ' <message>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize welcome',
+    help: 'Changes my welcoming message.',
+    usage: config.settings.prefix + name + ' <message>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize welcoming',
+    help: 'Changes wether I should welcome new people.',
+    usage: config.settings.prefix + name + ' <on/off>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize timeout',
+    help: 'Changes my reply when someones uses a command that is still in cooldown',
+    usage: config.settings.prefix + name + ' <number>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize prefix',
+    help: 'Changes the prefix I listen to on this server, mentions will still count as a global prefix',
+    usage: config.settings.prefix + name + ' <prefix>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize volume',
+    help: 'Changes the default volume the bot will assume when joining a voice channel.',
+    usage: config.settings.prefix + name + ' <[0-100]',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize nsfw',
+    help: '',
+    usage: config.settings.prefix + name + ' <on/off>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  cust.commands.push({
+    name: 'customize replay',
+    help: 'Changes wether I replay the playlist or not',
+    usage: config.settings.prefix + name + ' <on/off>',
+    level: 3,
+    aliases: '',
+    attributes: {
+      noDM: true,
+      hidden: false,
+      nsfw: false,
+      timeout: 0,
+    }
+  })
+  json += JSON.stringify(cust);
+  json += '}'
+  fs.writeFile(filename, json, 'utf8');
+  console.log('created ' + filename)
 }
-cust.commands.push({
-  name: 'customize nsfw',
-  help: 'Changes my reply when someones uses a NSFW command while I disallow that.',
-  usage: config.settings.prefix + name + ' <on/off>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize permissions',
-  help: 'Changes my reply when someone tries to use a command they do not have access to',
-  usage: config.settings.prefix + name + ' <message>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize welcome',
-  help: 'Changes my welcoming message.',
-  usage: config.settings.prefix + name + ' <message>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize welcoming',
-  help: 'Changes wether I should welcome new people.',
-  usage: config.settings.prefix + name + ' <on/off>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize timeout',
-  help: 'Changes my reply when someones uses a command that is still in cooldown',
-  usage: config.settings.prefix + name + ' <number>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize prefix',
-  help: 'Changes the prefix I listen to on this server, mentions will still count as a global prefix',
-  usage: config.settings.prefix + name + ' <prefix>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize volume',
-  help: 'Changes the default volume the bot will assume when joining a voice channel.',
-  usage: config.settings.prefix + name + ' <[0-100]',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize nsfw',
-  help: '',
-  usage: config.settings.prefix + name + ' <on/off>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-cust.commands.push({
-  name: 'customize replay',
-  help: 'Changes wether I replay the playlist or not',
-  usage: config.settings.prefix + name + ' <on/off>',
-  level: 3,
-  aliases: '',
-  attributes: {
-    noDM: true,
-    hidden: false,
-    nsfw: false,
-    timeout: 0,
-  }
-})
-json += JSON.stringify(cust);
-json += '}'
-fs.writeFile(filename, json, 'utf8');
-console.log('created ' + filename)
+
 if (cus !== null) {
   for (var g in cus) {
     for (var l in cus[g].Commands) {
@@ -242,41 +250,49 @@ exports.helpHandle = function (msg, suffix) {
   if (!suffix) {
     var misc = [
       'For further questions, join our server: https://discord.gg/Gn6DbZ7',
+      'We made a documentation site, that you can visit [here](https://eagle-docs.firebaseapp.com/)',
+      `From Server ${msg.guild.name}`,
+      `Bot Uptime: ` + getUptime(),
     ]
     msg.author.openDM().then((y) => {
       if (!msg.isPrivate) {
         msg.channel.sendMessage('Help is underway ' + msg.author.mention + '!')
       }
-      var field = [
-        { name: 'From Server', value: `${msg.guild.name}`, inline: true },
-        // { name: 'Owned by', value: '```\n' + `${msg.guild.owner.username}#${msg.guild.owner.discriminator} (${msg.guild.owner.id})` + '```', inline: true },
-        // { name: 'Current Region', value: '```\n' + msg.guild.region + '```', inline: true },
-        // { name: 'Members', value: '```\n' + msg.guild.members.length + '```', inline: true },
-        // { name: 'Text Channels', value: '```\n' + msg.guild.textChannels.length + '```', inline: true },
-        // { name: 'Voice Channels', value: '```\n' + msg.guild.voiceChannels.length + '```', inline: true },
-        // { name: 'Total Roles', value: '```\n' + msg.guild.roles.length + '```', inline: true },
-        { name: 'Bot Uptime', value: getUptime(), inline: true }
-      ]
-      var embed = {
-        title: `Documentation`,
-        description: `**Help is underway**\nWe made a documentation site, that you can visit [here](https://eagle-docs.firebaseapp.com/)`,
+      for (let i = 0; i < fieldsArr.length; i++) {
+        var embed = {
+          title: titles[i] + ' Commands',
+          description: `**Help arrived**\n`,
+          url: `https://eagle-docs.firebaseapp.com/`,
+          color: 0x2196f3,
+          timestamp: new Date(),
+          fields: fieldsArr[i],
+          footer: {
+            icon_url: `https://i.imgur.com/ToSRyGj.png`,
+            text: `made by DaKapo`
+          },
+          author: {
+            name: `Eaglebot`,
+            url: `https://discordapp.com/oauth2/authorize?&client_id=364341755216134144&scope=bot&permissions=536345655`,
+            icon_url: "https://i.imgur.com/8hVi4fn.png"
+          }
+        }
+        if (msg.guild.icon) { embed.thumbnail = { url: msg.guild.iconURL } }
+        y.sendMessage('', false, embed)
+      }
+      let embed2 = {
+        title: 'Additional Info',
+        description: `misc.join('\n')`,
         url: `https://eagle-docs.firebaseapp.com/`,
         color: 0x2196f3,
         timestamp: new Date(),
-        fields: field,
-        footer: {
-          icon_url: `https://i.imgur.com/ToSRyGj.png`,
-          text: `made by DaKapo`
-        },
+        fields: fieldsArr[i],
         author: {
           name: `Eaglebot`,
-          url: `https://discord.gg/Gn6DbZ7`,
+          url: `https://discordapp.com/oauth2/authorize?&client_id=364341755216134144&scope=bot&permissions=536345655`,
           icon_url: "https://i.imgur.com/8hVi4fn.png"
         }
       }
-      if (msg.guild.icon) { embed.thumbnail = { url: msg.guild.iconURL } }
-      y.sendMessage('', false, embed)
-      y.sendMessage(misc.join('\n'))
+      y.sendMessage('', false, embed2)
     }).catch((e) => {
       Logger.error(e)
       msg.channel.sendMessage('Well, this is awkward, something went wrong while trying to PM you. Do you have them enabled on this server?')
