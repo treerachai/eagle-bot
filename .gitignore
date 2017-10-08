@@ -38,6 +38,8 @@ node_modules
 # RethinkDB Database
 rethinkdb_data
 rethinkdb.exe
+
+# ff
 ffmpeg
 ffmpeg.exe
 ffplay.exe
