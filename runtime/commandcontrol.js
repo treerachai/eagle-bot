@@ -7,7 +7,6 @@ bugsnag.register(config.api_keys.bugsnag)
 var com = directory(module, './commands', {
   exclude: /custom/
 })
-var cus = directory(module, './commands/custom')
 var fs = require('fs');
 var Logger = require('./internal/logger.js').Logger
 var commands = []
@@ -225,25 +224,6 @@ for (let i = 0; i < 1; i++) {
   json += '}'
   fs.writeFile(filename, json, 'utf8');
   console.log('created ' + filename)
-}
-
-if (cus !== null) {
-  for (var g in cus) {
-    for (var l in cus[g].Commands) {
-      if (commands[l] && !cus[g].Commands[l].overwrite && typeof commands[l] !== 'function') {
-        throw new Error('Custom commands cannot replace default commands without overwrite enabled!')
-      }
-      commands[l] = cus[g].Commands[l]
-      if (cus[g].Commands[l].aliases !== undefined) {
-        for (var e in cus[g].Commands[l].aliases) {
-          if (alias[cus[g].Commands[l].aliases[e]] && typeof alias[cus[g].Commands[l].aliases[e]] !== 'function') {
-            throw new Error('Aliases cannot be shared between commands!')
-          }
-          alias[cus[g].Commands[l].aliases[e]] = cus[g].Commands[l]
-        }
-      }
-    }
-  }
 }
 
 exports.helpHandle = function (msg, suffix) {

@@ -8,7 +8,7 @@ var bugsnag = require('bugsnag')
 Commands.add = {
     name: 'add',
     help: "I'll add numbers!",
-    aliases: ['sum, plus'],
+    aliases: ['sum','plus'],
     usage: '<number1> <number2>',
     timeout: 0,
     noDM: false,
@@ -107,5 +107,3 @@ Commands.divide = {
 
 exports.Commands = Commands
 exports.Filename = "Math"
-
-

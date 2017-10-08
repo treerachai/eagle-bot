@@ -41,7 +41,7 @@ r.db('Discord').tableList().then((list) => {
   }
 })
 
-function loop (t) {
+function loop(t) {
   if (tables.length > 0) {
     checkTable(t).then((e) => {
       console.log(e)
@@ -56,7 +56,7 @@ function loop (t) {
   }
 }
 
-function checkTable (table) {
+function checkTable(table) {
   return new Promise(function (resolve, reject) {
     r.db('Discord').tableCreate(table).run().then(() => {
       resolve(`The table ${table} has been created`)
@@ -70,7 +70,7 @@ function checkTable (table) {
   })
 }
 
-function drainAndExit (exitCode) {
+function drainAndExit(exitCode) {
   r.getPoolMaster().drain().then(() => {
     process.exit(exitCode)
   })

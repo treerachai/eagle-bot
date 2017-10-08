@@ -27,7 +27,10 @@ exports.getGuildData = function (msg) {
           welcome: false,
           welcomeMessage: null,
           replay: null,
-        }
+        },
+        counts: [],
+        strikes: [],
+        timer: [],
       })
     } else {
       r.db('Discord').table('Guilds').get(msg.guild.id).then(guild => {
@@ -45,7 +48,10 @@ exports.getGuildData = function (msg) {
               welcome: false,
               welcomeMessage: null,
               replay: null
-            }
+            },
+            counts: [],
+            strikes: [],
+            timer: [],
           })
         }
       }).catch(err => {
