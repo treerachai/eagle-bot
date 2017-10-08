@@ -11,7 +11,8 @@
     "dbcreate": "node runtime/internal/dbcreate.js",
     "snyk-protect": "snyk protect",
     "forever": "forever -o eagle-out.log -e eagle-error.log start bot.js",
-    "start-db": "rethinkdb --daemon"
+    "start-db": "rethinkdb --daemon",
+    "shellstart": "start.sh"
   },
   "author": {
     "name": "Jonasdero"
